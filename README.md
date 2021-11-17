@@ -32,7 +32,7 @@ import 'package:card_scanner/card_scanner.dart';
 
 Call card scanner:
 ```dart
-final scanOptions = const ScanOptions();
+const scanOptions = ScanOptions(scanCardHolderName: true);
 final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
 print(receivedCard);
 ```
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> scanCard() async {
-    final scanOptions = const ScanOptions();
+    const scanOptions = ScanOptions(scanCardHolderName: true);
     final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
     if (receivedCard == null) return;
     if (!mounted) return;

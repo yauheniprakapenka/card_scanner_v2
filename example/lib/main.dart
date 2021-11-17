@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _scanCard() async {
-    final scanOptions = ScanOptions();
+    const scanOptions = ScanOptions(scanCardHolderName: true);
     final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
     if (receivedCard == null) return;
     if (!mounted) return;
