@@ -1,0 +1,22 @@
+name: card_scanner_example
+description: Demonstrates how to use the card_scanner plugin.
+version: 0.0.1+1
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ">=2.14.4 <3.0.0"
+  flutter: ^2.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  card_scanner:
+    path: ../
+
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
