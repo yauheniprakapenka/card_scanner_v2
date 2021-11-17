@@ -20,7 +20,7 @@ public class CardScannerOptions {
     var cardScannerTimeOut: Int = 0
     var enableDebugLogs: Bool = false
     var possibleCardHolderNamePositions: [String] = [CardHolderNameScanPositions.belowCardNumber.rawValue]
-    var prompt: String = "Наведите на карту"
+    var prompt: String = "Наведите камеру на карту"
     var cameraOrientation: CameraOrientation = .portrait
     
     init(
