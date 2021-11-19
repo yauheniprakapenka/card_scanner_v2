@@ -46,6 +46,37 @@ cardholder: LEE M. CARDHOLDER
 expiry:
 ```
 
+### Permission handling
+---
+
+If `iOS` app not allowed to use the camera
+
+<p align="center">
+    <img src=".github/ios_camera_setting.jpg" height="200">
+</p>
+
+then an exception will be sent:
+
+```dart
+Future<void> _scanCard() async {
+    const scanOptions = ScanOptions(scanCardHolderName: true);
+    try {
+      final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
+      if (receivedCard == null) return;
+      if (!mounted) return;
+      card = receivedCard;
+      setState(() {});
+    } catch (e) {
+      debugPrint(e.toString());
+      // Example catched error:
+      //
+      // PlatformException
+      // code: "camera_access_denied", 
+      // message: "No permission for the camera. Turn on permission in app settings"
+  }
+```
+
+
 ### Public entities
 ---
 
@@ -95,29 +126,34 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(card.toString()),
-            buildButton(),
+            _buildButton(),
           ],
         ),
       ),
     );
   }
 
-  Widget buildButton() {
+  Widget _buildButton() {
     return ElevatedButton(
       onPressed: () async {
-        await scanCard();
+        await _scanCard();
       },
       child: const Text('Scan card'),
     );
   }
 
-  Future<void> scanCard() async {
+  Future<void> _scanCard() async {
     const scanOptions = ScanOptions(scanCardHolderName: true);
-    final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
-    if (receivedCard == null) return;
-    if (!mounted) return;
-    card = receivedCard;
-    setState(() {});
+    try {
+      final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
+      if (receivedCard == null) return;
+      if (!mounted) return;
+      card = receivedCard;
+      setState(() {});
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }
+
 ```
