@@ -21,7 +21,17 @@ This package forked from
 - flutter 2.5.3
 - null safety
 
-### Usage
+### Installing
+---
+Add to pubspec.yaml
+
+```
+dependencies:
+  card_scanner:
+    git:
+      url: https://github.com/yauheniprakapenka/card_scanner.git
+      ref: 0b04289 # v0.3.1
+```
 ---
 
 Import the package:
@@ -77,7 +87,7 @@ Future<void> _scanCard() async {
 ```
 
 
-### Public entities
+### Entities
 ---
 
 - `CardScanner` 
@@ -86,6 +96,7 @@ Future<void> _scanCard() async {
 - `CardHolderPosition`
 
 ### Example
+---
 
 ```dart
 import 'package:card_scanner/card_scanner.dart';
