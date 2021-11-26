@@ -9,6 +9,8 @@ extension String {
         let H = B.replacingOccurrences(of: "H", with: "4")
         let g = H.replacingOccurrences(of: "g", with: "3")
         let L = g.replacingOccurrences(of: "L", with: "6")
-        return L
+        let curlyBraceRight = L.replacingOccurrences(of: "}", with: "4")
+        let question = curlyBraceRight.replacingOccurrences(of: "?", with: "2")
+        return question
     }
 }
