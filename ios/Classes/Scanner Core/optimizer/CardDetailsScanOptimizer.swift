@@ -35,7 +35,6 @@ class CardDetailsScanOptimizer {
         handle(cardHolderName: cardDetails.cardHolderName)
         
         updateOptimalData()
-        printStatus()
     }
     
     func isReadyToFinishScan() -> Bool {
@@ -51,7 +50,7 @@ class CardDetailsScanOptimizer {
     private func handle(cardNumber: String?) {
         guard let cardNumber = cardNumber, cardNumber.isNotEmpty else { return }
         
-        let sanitizedCardNumber = cardNumber.sanitized.cardNumberSized
+        let sanitizedCardNumber = cardNumber.removeAllWhitespaceAndNewline.cardNumberSized
         
         cardNumberFrequencyTable[sanitizedCardNumber] = (cardNumberFrequencyTable[sanitizedCardNumber] ?? 0) + 1
     }
@@ -67,23 +66,11 @@ class CardDetailsScanOptimizer {
         
         cardHolderNameFrequencyTable[cardHolderName] = (cardHolderNameFrequencyTable[cardHolderName] ?? 0) + 1
     }
-    
-    func printStatus() {
-        debugLog("Card Number : \(optimalCardNumber ?? "Not Yet Scanner")", scannerOptions: scannerOptions)
-        debugLog("Card Number Freq : \(cardNumberFrequencyTable[optimalCardNumber ?? ""] ?? 0)", scannerOptions: scannerOptions)
-        debugLog("Expiry Date =  \(optimalExpiryDate ?? "Not Yet Scanner")", scannerOptions: scannerOptions)
-        debugLog("Expiry Date Freq : \(expiryDateFrequencyTable[optimalExpiryDate ?? ""] ?? 0)", scannerOptions: scannerOptions)
-        debugLog("Card Holder Name :  \(optimalCardHolderName ?? "Not Yet Scanner")", scannerOptions: scannerOptions)
-        debugLog("Card Holder Name Freq :  \(cardHolderNameFrequencyTable[optimalCardHolderName ?? ""] ?? 0)", scannerOptions: scannerOptions)
-        debugLog("Scanner Options = \(scannerOptions)", scannerOptions: scannerOptions)
-    }
-    
+
     func getOptimalCardDetails() -> CardDetails? {
         guard let optimalCardNumber = optimalCardNumber else {
             return nil
         }
-        
-        printStatus()
         
         return CardDetails(
             cardNumber: optimalCardNumber,

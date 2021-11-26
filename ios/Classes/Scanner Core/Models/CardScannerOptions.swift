@@ -9,16 +9,16 @@
 import Foundation
 
 public class CardScannerOptions {
-    var scanCardHolderName: Bool = false
-    var scanExpiryDate: Bool = false
+    var scanCardHolderName: Bool = true
+    var scanExpiryDate: Bool = true
     var initialScansToDrop: Int = 1
-    var validCardsToScanBeforeFinishingScan: Int = 6
+    var validCardsToScanBeforeFinishingScan: Int = 1
     var cardHolderNameBlackListedWords: [String] = []
     var considerPastDatesInExpiryDateScan: Bool = false
     var maxCardHolderNameLength: Int = 26
     var enableLuhnCheck: Bool = true
     var cardScannerTimeOut: Int = 0
-    var enableDebugLogs: Bool = false
+    var enableDebugLogs: Bool = true
     var possibleCardHolderNamePositions: [String] = [CardHolderNameScanPositions.belowCardNumber.rawValue]
     var prompt: String = "Наведите камеру на карту"
     var cameraOrientation: CameraOrientation = .portrait
