@@ -30,7 +30,7 @@ dependencies:
   card_scanner:
     git:
       url: https://github.com/yauheniprakapenka/card_scanner.git
-      ref: 0b04289 # v0.3.1
+      ref: 5fef7e1 # v0.3.1
 ```
 ---
 
