@@ -20,7 +20,7 @@ class SingleFrameCardScanner {
             visionText: visionText,
             scannerOptions: cardScanOptions
         ).filter() as? CardNumberScanResult? else {
-            debugLog("No card number found yet", scannerOptions: cardScanOptions)
+            print("No card number found yet")
             return nil
         }
         

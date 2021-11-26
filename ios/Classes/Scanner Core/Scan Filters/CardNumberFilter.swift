@@ -1,10 +1,3 @@
-//
-//  CardNumberFilter.swift
-//  card_scanner
-//
-//  Created by Abhinav Kumar on 12/02/21.
-//
-
 import Foundation
 import MLKitTextRecognition
 
@@ -22,25 +15,39 @@ class CardNumberFilter: ScanFilter {
     func filter() -> ScanFilterResult? {
         for (blockIndex, block) in visionText.blocks.enumerated() {
             for (_, line) in block.lines.enumerated() {
-                let sanitizedBlockText = line.text.sanitized
-                debugLog("Sanitized Card Number : \(sanitizedBlockText)", scannerOptions: scannerOptions)
+                let scannedText = line.text
+                let trimmedText = scannedText.removeAllWhitespaceAndNewline
                 
-                if let firstMatch = cardNumberRegex.firstMatch(
-                    in: sanitizedBlockText,
-                    range: NSRange(location: 0, length: sanitizedBlockText.count)
-                ) {
-                    let cardNumber = (sanitizedBlockText as NSString).substring(with: firstMatch.range).trimmingCharacters(in: .whitespacesAndNewlines) as String
+                let minCardNumberCount = 16
+                if trimmedText.count < minCardNumberCount {
+                    continue
+                }
+                
+                let replacedLettersText = trimmedText.replaceLettersToNumbers
+       
+                print("""
+                ----------
+                RESULT
+                \(trimmedText) | remove All Whitespace And Newline"
+                \(replacedLettersText) | replace Letters To Numbers
+                ----------
+                """)
+                
+                let replacedLettersToNumbersMatch = cardNumberRegex.firstMatch(
+                    in: replacedLettersText,
+                    range: NSRange(location: 0, length: replacedLettersText.count)
+                )
+                
+                if replacedLettersToNumbersMatch != nil {
+                    print("MATCH: replacedLettersToNumbersMatch")
+                    let cardNumber = (replacedLettersText as NSString).substring(with: replacedLettersToNumbersMatch!.range).trimmingCharacters(in: .whitespacesAndNewlines) as String
                     
-                    if cardNumber.isNotValidCardNumber {
+                    if !cardNumber.isLuhnValid {
+                        print("\(cardNumber) not valid\n")
                         continue
                     }
                     
-                    debugLog("Card Number : \(cardNumber)", scannerOptions: scannerOptions)
-                    
-                    if scannerOptions.enableLuhnCheck && cardNumber.isNotValidCardNumber {
-                        debugLog("Luhn check failed for card number (\(cardNumber))", scannerOptions: scannerOptions)
-                        continue
-                    }
+                    print("\(cardNumber) valid")
                     
                     return CardNumberScanResult(
                         visionText: visionText,
@@ -55,32 +62,4 @@ class CardNumberFilter: ScanFilter {
         return nil
     }
     
-    
-}
-
-extension String {
-    var isValidCardNumber: Bool {
-        return true
-    }
-    
-    var isNotValidCardNumber: Bool {
-        return !isValidCardNumber
-    }
-    
-    var isLuhnValidCardNumber: Bool {
-        let digitList: [Int] = self.reversed().enumerated().map { (index, element) in
-            var num = Int("\(element)") ?? 0
-            if (index % 2 == 1) {
-                num = (num * 2)
-                num = (num == 0) ? num : (num % 9 == 0) ? 9 : num % 9
-            }
-            return num
-        }
-        
-        return (digitList.reduce(0, +)) % 10 == 0
-    }
-    
-    var isNotLuhnValidCardNumber: Bool {
-        return !isLuhnValidCardNumber
-    }
 }

@@ -111,28 +111,3 @@ enum CardHolderNameScanPositions: String {
         }
     }
 }
-
-extension String {
-    var isNotEmpty: Bool {
-        return !isEmpty
-    }
-    
-    var sanitized: String {
-        let newLineRemoved = replacingOccurrences(of: "\n", with: "")
-        let newLineAndSpacesRemoved = newLineRemoved.replacingOccurrences(of: " ", with: "")
-        return newLineAndSpacesRemoved
-    }
-    
-    var cardNumberSized: String {
-        return ((self as NSString).substring(to: count >= 16 ? 16 : count) as String)
-    }
-}
-
-
-extension Dictionary where Key == String, Value == Int {
-    var mostFrequentData: String? {
-        return self.sorted { (first, second) -> Bool in
-            first.value > second.value
-        }.first?.key
-    }
-}

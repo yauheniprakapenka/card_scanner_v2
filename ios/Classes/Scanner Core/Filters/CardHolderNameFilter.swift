@@ -62,7 +62,7 @@ class CardHolderNameFilter : ScanFilter {
         
         if (cardHolder.hasPrefix("valid from") || cardHolder.hasPrefix("valid thru")) { return false }
         if (cardHolder.hasSuffix("valid from") || cardHolder.hasSuffix("valid thru")) { return false }
-        var defaultBlackListedWords = CardHolderNameConstants.blackListWords
+        var defaultBlackListedWords = CardHolderNameConstants.defaultBlackListedWords
         defaultBlackListedWords.append(contentsOf: scannerOptions.cardHolderNameBlackListedWords)
         
         if (defaultBlackListedWords.contains(cardHolder.lowercased())) {
