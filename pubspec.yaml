@@ -1,6 +1,6 @@
 name: card_scanner
 description: Credit card scanner for Flutter.
-version: 0.2.1+3
+version: 0.3.0+4
 
 environment:
   sdk: ">=2.14.4 <3.0.0"
