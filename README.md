@@ -5,8 +5,8 @@
 
 Card scanning plugin.
 
-This package forked from 
-[nateshmbhat/card-scanner-flutter](https://github.com/nateshmbhat/card-scanner-flutter) and made some changes.
+This package forked from deprecated
+[nateshmbhat/card-scanner-flutter](https://github.com/nateshmbhat/card-scanner-flutter) and made some changes to bring back to life.
 
 ### Platform supports
 ---
